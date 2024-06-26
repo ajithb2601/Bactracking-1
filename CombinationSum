@@ -1,0 +1,49 @@
+    """
+    Time Complexity: 0(2^n)
+    Space Complexity: O(N)
+    Approach: 
+        - We take backtracking approach (exhaustive)
+        - we recurse until we go out of bound ie index == arr.length or target < 0
+        - if target == 0 
+            - we add the copy of the path to the result list and return
+    """
+
+
+
+
+class Solution {
+    List<List<Integer>> result;
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+
+        result = new ArrayList<>();
+        //Base Condition
+        if(candidates == null || candidates.length == 0){
+            return result;
+        }
+        recurse(candidates, target, 0, new ArrayList<>());
+        return result;
+    }
+
+    public void recurse(int[] candidates, int target, int index, List<Integer> path) {
+        
+        //Base
+        if(target < 0 || index == candidates.length){
+            return;
+        }
+        if(target == 0){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+
+        //Logic
+        //0 or not choose case;
+        recurse(candidates, target, index+1, path);
+        //Action
+        path.add(candidates[index]);
+         //1 or choose case
+        recurse(candidates, target - candidates[index], index, path);
+        //Backtrack
+        path.remove(path.size()-1);
+
+    }
+}
